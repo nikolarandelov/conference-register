@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Conference Register System
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /speakers/add:
+    post:
+      tags:
+        - SpeakerDao
+      summary: Add a new speaker
+      operationId: addSpeaker
+      requestBody:
+        description: Description for Add SpeakerDao
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Speaker'
+      responses:
+        '201':
+          description: Created
+  /speakers:
+    get:
+      tags:
+        - SpeakerDao
+      operationId: getSpeakers
+      summary: Get all speakers
+      responses:
+        200:
+          description: Get all speakers successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Speaker'
+              example: [ { "firstName": "Petar", "lastName": "Petrov", "email": "petarpetrov@gmail.com", "title": "Developer", "yearsInEndava": 2 },
+                         { "firstName": "Stoyan", "lastName": "Stoyanov", "email": "stoyanstoyanov@gmail.com", "title": "Senior Developer", "yearsInEndava": 3 } ]
+  /events/add:
+    post:
+      tags:
+        - Event
+      summary: Add a new event
+      operationId: addEvent
+      requestBody:
+        description: Description for Add Event
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Event'
+      responses:
+        '201':
+          description: Created
+  /events:
+    get:
+      tags:
+        - Event
+      operationId: getEvents
+      summary: Get all events
+      responses:
+        200:
+          description: Get all events successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+              example: [ { "name": "Contract first approach", "description": "Contract first approach description", "startDate": "2022-05-25", "endDate": "2022-05-26", "numberOfSpeakers": 2 },
+                         { "name": "Spring Reactive", "description": "Spring Reactive description", "startDate": "2022-06-25", "endDate": "2022-06-26", "numberOfSpeakers": 2 } ]
+components:
+  schemas:
+    Speaker:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        title:
+          type: string
+        yearsInEndava:
+          type: integer
+          format: int32
+    Event:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        startDate:
+          type: string
+          format: date
+          pattern: "YYYY-MM-DD"
+        endDate:
+          type: string
+          format: date
+          pattern: "YYYY-MM-DD"
+        numberOfSpeakers:
+          type: integer
+          format: int32
+    Response:
+      type: object
+      properties:
+        message:
+          type: string
